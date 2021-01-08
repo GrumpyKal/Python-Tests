@@ -1,0 +1,95 @@
+import random
+
+u_name = "User"
+u_score = 0
+c_score = 0
+
+
+#Store lists of possible actions as strings for computer randomization and comparison.
+rps_actions = ["r", "p", "s"]
+r = ["Rock", "R", "rock", "r"]
+p = ["Paper", "P", "paper", "p"]
+s = ["Scissors", "Scissor", "S", "scissors", "scissor", "s"]
+
+
+#Get user name for score display
+def GetName():
+	global u_name
+	print("Please type your user name.")
+	u_name = input("")
+	if len(u_name) > 10:
+		print("Please limit user name to 10 characters.")
+		GetName()
+	else:
+		return u_name
+
+
+#Pretty much the entire game set to loop after each round
+def MainGame():
+	global u_score
+	global c_score
+	global u_name
+	print("Rock, Paper, or Scissors?")
+	
+	#Get player choice
+	u_choice = input("")
+	
+	#Convert choice for easy comparison via lists
+	if u_choice in(r):
+		u_action = "Rock"
+	elif u_choice in(p):
+		u_action = "Paper"
+	elif u_choice in(s):
+		u_action = "Scissors"
+	
+	#Reset game round in case of invalid input
+	else:
+		print("That is not a valid response.")
+		MainGame()
+		
+	#Randomize computer choice and simplify for comparison
+	c_choice = random.choice(rps_actions)
+	if c_choice in(r):
+		c_action = "Rock"
+	elif c_choice in(p):
+		c_action = "Paper"
+	elif c_choice in(s):
+		c_action = "Scissors"
+	
+	#Let player see both choices
+	print("You have chosen", u_action)
+	print("Your opponent has chosen", c_action)
+	
+	#Compare choices to determine outcome of round
+	if u_action == c_action:
+		print("You tied.")
+	elif u_action in(r) and c_action in(p):
+		print("Paper covers Rock. Your opponent wins.")
+		c_score += 1
+	elif u_action in(r) and c_action in(s):
+		print("Rock smashes Scissors. You win.")
+		u_score += 1
+	elif u_action in(p) and c_action in(r):
+		print("Paper covers Rock. You win.")
+		u_score += 1
+	elif u_action in(p) and c_action in(s):
+		print("Scissors cut Paper. Your opponent wins.")
+		c_score += 1
+	elif u_action in(s) and c_action in(r):
+		print("Rock smashes Scissors. Your opponent wins.")
+		c_score += 1
+	elif u_action in(s) and c_action in(p):
+		print("Scissors cut Paper. You win.")
+		u_score += 1
+		
+	#Show current scores
+	print(u_name, "'s current score is:", u_score)
+	print("Your opponent's current score is:", c_score)
+	
+	#Reset round
+	MainGame()
+
+print("Welcome. This is a simple game of Rock, Paper, Scissors.")
+print("To start, please enter a user name.")
+GetName()
+MainGame()
